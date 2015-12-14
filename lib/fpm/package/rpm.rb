@@ -55,6 +55,8 @@ class FPM::Package::RPM < FPM::Package
     next rpmbuild_define
   end
 
+  option "--rcfile", "FILELIST", "Set alternate rpmrc file to <rcfile>."
+
   option "--dist", "DIST-TAG", "Set the rpm distribution."
 
   option "--digest", DIGEST_ALGORITHM_MAP.keys.join("|"),
@@ -432,6 +434,10 @@ class FPM::Package::RPM < FPM::Package
     # issue #707
     if !rpm_target.nil?
       args += ["--target", rpm_target]
+    end
+
+    if !attributes[:rpm_rcfile].nil?
+      args += ["--rcfile", attributes[:rpm_rcfile]]
     end
 
     # set the rpm dist tag
