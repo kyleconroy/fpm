@@ -55,7 +55,8 @@ class FPM::Package::RPM < FPM::Package
     next rpmbuild_define
   end
 
-  option "--rcfile", "FILELIST", "Set alternate rpmrc file to <rcfile>."
+  option "--rpmbuild-rcfile", "FILELIST", "Set alternate rpmrc file to <rcfile>."
+  option "--rpmbuild-dbpath", "DIRECTORY", "use database in DIRECTORY"
 
   option "--dist", "DIST-TAG", "Set the rpm distribution."
 
@@ -436,8 +437,12 @@ class FPM::Package::RPM < FPM::Package
       args += ["--target", rpm_target]
     end
 
-    if !attributes[:rpm_rcfile].nil?
-      args += ["--rcfile", attributes[:rpm_rcfile]]
+    if !attributes[:rpm_rpmbuild_rcfile].nil?
+      args += ["--rcfile", attributes[:rpm_rpmbuild_rcfile]]
+    end
+
+    if !attributes[:rpm_rpmbuild_dbpath].nil?
+      args += ["--dbpath", attributes[:rpm_rpmbuild_dbpath]]
     end
 
     # set the rpm dist tag
